@@ -1,0 +1,201 @@
+
+
+<html>
+<head>
+  <title>random imgur</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #121211;
+      font-family: arial, sans-serif;
+      color: #ffffff;
+      font-size: 15px;
+    }
+    
+    div.clear {
+      clear: both;
+    }
+    
+    div.toolbar {
+      background-color: #2b2b2b;
+      border-bottom: 4px solid #444442;
+      margin-bottom: 20px;
+    }
+    
+    div.center {
+      width: 700px;
+      margin: 0 auto;
+    }
+    
+    h1.logo {
+      margin: 5px 0 2px 0;
+      background: transparent url('http://i.imgur.com/bcyJM.gif') no-repeat top left;
+      width: 156px;
+      height: 27px;
+      display: block;
+      float: left;
+    }
+    
+    h1.logo span {
+      display: none;
+    }
+    
+    div.options {
+      float: right;
+      border-left: 1px solid #121211;
+      border-right: 1px solid #121211;
+    }
+    
+    div.options ul {
+      margin: 0;
+      padding: 0;
+      border-left: 1px solid #444442;
+      border-right: 1px solid #444442;
+    }
+    
+    div.options ul li {
+      padding: 9px 10px 8px 10px;
+      display: block;
+      float: left;
+    }
+    
+    span#score,
+    input#rate {
+      color: #97bf39;
+    }
+    
+    input#btn {
+      background-color: transparent;
+      color: #ffffff;
+      font-size: 15px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      margin-top: -1px;
+    }
+    
+    input#btn:hover {
+      color: #97bf39;
+    }
+    
+    input#btn[disabled] {
+      color: #444442;
+    }
+    
+    input#rate {
+      font-size: 12px;
+      padding: 1px;
+      background: transparent;
+      border: 1px solid #444442;
+      margin: 0;
+    }
+    
+    div#image {
+      width: 700px;
+      margin: 0 auto;
+    }
+    
+    a#link {
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+  <script type="text/javascript">
+    var currentCount = 0;
+    var randString = function(){
+      var dict = ['a','b','c','d','e','f','g','h','i','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z', 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+      str = "";
+      for (var i=0; i<5; i++){
+        str += dict[Math.floor((Math.random()*51))]
+      }
+      return str;
+    }
+
+    var nextImage = function(e){
+      currentCount++;
+      var randStr = randString();
+      var src = "http://i.imgur.com/" + randStr + ".jpg";
+      var page = "http://imgur.com/" + randStr;
+      var btn = document.getElementById('btn');
+      btn.disabled = true;
+      var img = document.getElementById('img');
+      var lnk = document.getElementById('link');
+      var score = document.getElementById('score');
+      score.innerHTML = currentCount;
+      img.style.display = 'none';
+      img.src = src;
+      lnk.href = page;
+      img.onload = function(){
+        if(img.width == 161 && img.height == 81){
+          nextImage();
+        } else {
+          var max_width = ((img.width > 700) ? 700 : img.width) + 'px';
+          currentCount = 0;
+          img.style.display = 'block';
+          document.getElementById('image').style.width = max_width;
+          document.getElementById('img').style.width = max_width;
+          btn.disabled = false;
+          timedTask();
+        }
+      };
+    }
+
+    var timedTask = function(){
+      var input = document.getElementById('rate');
+      var val = input.value * 1000;
+      setTimeout(nextImage, val);
+    }
+
+    var init = function(){
+      nextImage();
+    }
+  </script>
+  <style type="text/css">
+  </style>
+</head>
+
+<body onload="javascript:init()">
+  <div class="toolbar">
+    <div class="center">
+      <h1 class="logo">
+        <span>randimgur</span>
+      </h1>
+      
+      <div class="options">
+        <div class="wrap">
+          <ul>
+            <li><span class="label">Timer</span> <input size="5" type="text" value="25" id="rate"></li>
+            <li>Score <span id="score">0</span></li>
+            <li><input id="btn" type="button" value="Random" onclick="javascript:nextImage()" /></li>
+            <div class="clear"></div>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="clear">
+        
+      </div>
+    </div>
+  </div>
+  <div id="image">
+    <a id="link" target="_blank" href="http://i.imgur.com/asdRxas.jpg">
+      <img id="img" height="auto" style="display:none;" src="http://i.imgur.com/asdRxas.jpg">
+    </a>
+  </div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33994154-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
+
